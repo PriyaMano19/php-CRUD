@@ -4,10 +4,11 @@ include 'config.php';
 session_start();
 
 if(isset($_GET['deleteid']))
+	
 {
 	$uid=$_GET['deleteid'];
 
-	$sql="DELETE FROM userdetails where uid=$uid";
+	$sql="DELETE FROM userdetails where customer_id=$uid";
 	$result=mysqli_query($data,$sql);
 	if($result)
 	{

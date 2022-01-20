@@ -67,6 +67,7 @@ if(isset($_POST['update']))
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,72 +75,107 @@ if(isset($_POST['update']))
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <!-- Bootstrap CSS -->
   <?php include 'head.php' ?>
-
   <title>userhome</title>
-  <style>
-    div {
-      border-radius: 5px;
-      background-color: #f2f2f2;
-      padding: 20px;
-    }
-
-  </style>
+  
 </head>
+<style>
+  div {
+    border-radius: 1px;
+    margin-left: 300px;
+    padding: 10px;
+    
+   
+   }
+
+  div container my-5{
+    background: rgba(0, 128, 0, 0.1);
+    width:100%;
+    
+  }
+
+
+  
+ 
+
+</style>
+
 <body>
-<br><br>
-  <div class="col-md-12 bg-light text-right">
-                
-                <button onclick="location.href='index.php'"  class="btn btn-sm btn-primary"><i class="fa fa-home"></i> Home</button>
-                <a class="btn btn-sm btn-primary" href="logout.php">Logout</a>
+
+
+  
+
+ 
+ 
+  <br><br>
+
+
+<div class="bs-example">
+    <div class=" clearfix ">
+         
+               <button onclick="location.href='index.php'"  class="btn btn-sm btn-primary float-right ml-2"><i class="fa fa-home"></i> Home</button>
+                <a class="btn btn-sm btn-primary float-right " href="logout.php">Logout</a>
        
-               
-               
-            </div>
+    </div>
+</div>
 
-  <center><h1>userhome Page</h1></center>
-</body>
 
-<div class="container my-5">
+  <div class="container my-5" >
+ <div class="col-lg-4">
+    
+    <form  method="POST" id="myForm" class="" enctype="multipart/form-data">
+      <center><h1>Add New Details</h1></center>
+       <div class="mb-3">
+          <?php 
+            $sql = "SELECT  image from userdetails";
+            $res=mysqli_query($data,$sql);
 
-  <form  method="POST" id="myForm" enctype="multipart/form-data">
+            $output ="";
 
-    <div class="mb-3">
-        <label  class="form-label">Update Photo</label>
-       
-        <input type="file" class="form-control" name="img"  value=  <?php echo 	$filename;?>  >
-        
+            if(mysqli_num_rows($res) < 1) {
+              $output .="<h3> no image uploaded</h3>";
+            }
+
+            while ($row = mysqli_fetch_array($res) ){
+               $output .="<img src='".$row['image']."'style='width:400px;height:400px;'>";
+            }
+            ?>
          
       </div>
 
-      <div class="mb-3">
-      <label  class="form-label">NIC-No </label>
-      <input type="text" class="form-control" plcaeholder="Enter your NIC-No " id="nic" name="nic" autocomplete="off" value=  <?php echo $nic;?>  >
-    </div>
+        <style>
+          .error{
+            color: red;
+            font-size: 12px;
+          }
+        </style>
+        <label  class="form-label ">NIC-Number </label>
+        <input type="text" class="form-control form-control-sm" id="nic" plcaeholder="Enter your NIC-Number " name="nic" value=  <?php echo $nic;?>  >
+        <span id="errornic" class="error"></span><br>
 
 
-    <div class="mb-3">
-      <label  class="form-label">First Name</label>
-      <input type="text" class="form-control" plcaeholder="Enter your first name" id="fname" name="fname" autocomplete="off" value=<?php echo $fname;?> >
-    </div>
+     
+        <label  class="form-label">First Name</label>
+        <input type="text" class="form-control form-control-sm" id="fname" plcaeholder="Enter your first name" name="fname" value=<?php echo $fname;?>>
+        <span id="errorfname" class="error"></span><br>
 
-    <div class="mb-3">
-      <label  class="form-label">Last Name</label>
-      <input type="text" class="form-control" plcaeholder="Enter your last name" id="lname" name="lname" autocomplete="off" value=<?php echo $lname;?>  >
-    </div>
+      
+        <label  class="form-label">Last Name</label>
+        <input type="text" class="form-control form-control-sm" id="lname" plcaeholder="Enter your last name" name="lname" value=<?php echo $lname;?> >
+        <span id="errorlname" class="error"></span><br>
+    
+        <label  class="form-label">Mobile Nnumber </label>
+        <input type="text" class="form-control form-control-sm" id="mno" plcaeholder="Enter your Mobile Nnumber" name="num" value=<?php echo $pno;?>>
+        <span id="errormno" class="error"></span><br>
+     
+        <label  class="form-label">Address </label>
+        <input type="text" class="form-control form-control-sm" id="add" plcaeholder="Enter your Addresss " name="add" value=<?php echo $address;?>>
+        <span id="erroradd" class="error"></span><br>
 
-   
-    <div class="mb-3">
-      <label  class="form-label">Mobile Nnumber </label>
-      <input type="text" class="form-control" plcaeholder="Enter your Mobile Nnumber" id="mno" name="num" autocomplete="off" value=<?php echo $pno;?> >
-    </div>
-
-    <div class="mb-3">
-      <label  class="form-label">Address </label>
-      <input type="text" class="form-control" plcaeholder="Enter your Addresss " id="add" name="add" autocomplete="off" value=<?php echo $address;?>  >
-    </div>
-
-    <label  class="form-label">Vehicle Type </label>
+     
+     
+        <label  class="form-label">Vehicle Type </label>
     <span><?php echo $error_vehicle; ?></span>
         <select  name="vehi" id = "vehicle" class="form-control form-control-sm">
         <option value="">select vehicle</option>

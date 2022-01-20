@@ -25,7 +25,17 @@ session_start();
   <style>
     * {
       box-sizing: border-box;
+  
     }
+
+    .btn-home {
+  background-color: DodgerBlue;
+  border: none;
+  color: white;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
 
 
 
@@ -92,13 +102,11 @@ session_start();
       /*background-color: #f2f2f2;*/
       padding: 3px;
     }
-
-   
   </style>
 </head>
 <body>
-<br><br>
-  <div class="col-md-12 bg-light text-right">
+  <br><br>
+  <div class="col-md-12  text-right">
                 
                 <button onclick="location.href='index.php'"  class="btn btn-sm btn-primary"><i class="fa fa-home"></i> Home</button>
                 <a class="btn btn-sm btn-primary" href="logout.php">Logout</a>
@@ -107,7 +115,7 @@ session_start();
                
             </div>
 
-
+  
   
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
@@ -140,21 +148,19 @@ session_start();
   
   
   <div class="container my-5">
-    <center><h1>Customer Details</h1></center>
+    <center><h1>Order Summary  Details</h1></center>
     <a class="btn btn-primary my-5" href="userhome.php">ADD</a>
     
     <table  class="table table-striped table-bordered" id="example">
       <thead>
         <tr>
-          <th scope="col">Customer_id</th>
-          <th scope="col">Image</th>
-          <th scope="col">FirstName</th>
-          <th scope="col">LastName</th>
-        
-          <th scope="col">MobileNumber</th>
-          <th scope="col">Address</th>
-       
-
+          <th scope="col">customer_ID</th>
+         
+          <th scope="col">NIC</th>
+          <th scope="col">Vehicle</th>
+          <th scope="col">Vehicle Number</th>
+          <th scope="col">Created_Date</th>
+          <th scope="col">Status</th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
@@ -162,39 +168,62 @@ session_start();
 
        <?php
        
-       
-       $sql ="SELECT * FROM userdetails";
+       function vehiclename($vid){
+         global $data;
+        $sql ="SELECT * FROM vehicle WHERE vid = $vid";
+        $result=mysqli_query($data,$sql);
+        $row=mysqli_fetch_assoc($result);
+       echo $row['vehicletype'];
+       }
+
+       function vehiclenumber($vid){
+        global $data;
+       $sql ="SELECT * FROM vehicle_no WHERE vehicle_id_fk = $vid";
+       $result=mysqli_query($data,$sql);
+       $row=mysqli_fetch_assoc($result);
+      echo $row['vehicle_num'];
+      }
+
+
+       $sql ="SELECT * FROM userdetails WHERE status = 1";
        $result=mysqli_query($data,$sql);
        if($result)
        {
          while($row=mysqli_fetch_assoc($result))
          {
            $uid=$row['customer_id'];
-           $image=$row['image'];
-           $fname=$row['fname'];
-           $lname=$row['lname'];
+         
+           $nic=$row['nic'];
            
-           $pno=$row['mobileno'];
-           $address=$row['address'];
-           $imgfile =$row['image'];
-           
-           echo "<tr>
-           <th scope='row'>$uid</th>
-           <td>  <img src='../upload/$imgfile' alt='vehicle' height='50px'> </td>
-           <td>$fname</td>
-           <td>$lname</td>
-           <td>$pno</td>
-           <td>$address</td>
-           
-           <td class='text-center'>
-           
+           $vehicle=$row['vehicle'];
+           $vehicleno=$row['vehicleno'];
+           $date=$row['created_date'];
+           $status=$row['status'];
 
-           <a class='btn btn-sm btn-primary' href='update.php?updateid=$uid'><i class='fa fa-edit'></i></a>
-           <a class='btn btn-sm btn-danger' href='delete.php?deleteid=$uid'><i class='fa fa-trash'></i></a>
-
-           </td>
-
-           </tr>";
+           ?>
+           <tr>
+             <td><?php echo $uid; ?></td>
+             <td><?php echo $nic; ?></td>
+             <td><?php vehiclename($vehicle) ?></td>
+             <td><?php vehiclenumber($vehicleno) ?></td>
+             <td><?php echo $date; ?></td>
+             
+             <td class="text-center">
+               <?php
+                if ($status == 1) {
+                  echo "<a class='btn btn-sm btn-danger ' href='status.php?id=$uid'><i class='fa fa-ban'></i></a>";
+                }
+                else{
+                  echo "enable";
+                }
+               ?>
+             </td>
+             <td class="text-center">
+             <a class="btn btn-sm btn-primary" href="view.php?updateid=<?php echo $uid; ?>"><i class="fa fa-eye"></i></a>
+           <!-- <a class="btn btn-sm btn-danger" href="delete.php?deleteid="><i class="fa fa-trash"></i></a>-->
+             </td>
+           </tr>
+           <?php
          }
 
        }

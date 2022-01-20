@@ -81,13 +81,16 @@ if(file_exists("upload/" .$_FILES['img']['name'] )) {
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/form.css">
 
   <!-- Bootstrap CSS -->
   <?php include 'head.php' ?>
   <title>userhome</title>
   
 </head>
-<style>
+<!--<style>
   div {
     border-radius: 1px;
     margin-left: 300px;
@@ -116,9 +119,15 @@ if(file_exists("upload/" .$_FILES['img']['name'] )) {
     font-size: 9px;
     height: 13px;
   }
+
+          .error{
+            color: red;
+            font-size: 12px;
+          }
+       
  
 
-</style>
+</style>-->
 
 <body>
 
@@ -140,35 +149,14 @@ if(file_exists("upload/" .$_FILES['img']['name'] )) {
 </div>
 
 
-  <div class="container my-5" >
- <div class="col-lg-4">
-    
+  
+ <div class="form-style-10">
+<h1>Rented Car Details<span> Details!</span></h1>
     <form  method="POST" id="myForm" class="" enctype="multipart/form-data">
-      <center><h1>Add New Details</h1></center>
-       <div class="mb-3">
-          <?php 
-            $sql = "SELECT  image from userdetails";
-            $res=mysqli_query($data,$sql);
-
-            $output ="";
-
-            if(mysqli_num_rows($res) < 1) {
-              $output .="<h3> no image uploaded</h3>";
-            }
-
-            while ($row = mysqli_fetch_array($res) ){
-               $output .="<img src='".$row['image']."'style='width:400px;height:400px;'>";
-            }
-            ?>
-         
-      </div>
-
-        <style>
-          .error{
-            color: red;
-            font-size: 12px;
-          }
-        </style>
+     
+    <div class="section"><span>1</span>Cutomer Details</div>
+    <div class="inner-wrap">
+        
         <label  class="form-label ">NIC-Number </label>
         <input type="text" class="form-control form-control-sm" id="nic" plcaeholder="Enter your NIC-Number " name="nic" >
         <span id="errornic" class="error"></span><br>
@@ -191,11 +179,26 @@ if(file_exists("upload/" .$_FILES['img']['name'] )) {
         <label  class="form-label">Address </label>
         <input type="text" class="form-control form-control-sm" id="add" plcaeholder="Enter your Addresss " name="add" >
         <span id="erroradd" class="error"></span><br>
+    </div>
+      
+       
 
-     
-     
+
+
+<style>
+    .error{
+            color: red;
+            font-size: 12px;
+          }
+       
+</style>
+
+
+    <div class="section"><span>2</span>Vehicle Details</div>
+    <div class="inner-wrap">
+        
         <label  class="form-label">Vehicle </label>
-        <select  name="vehi" id = "vehicle" class="form-control form-control-sm">
+        <select  name="vehi" id = "vehicle" class="form-control form-control-lg">
         <option>select vehicle</option>
          <?php
          $query = "SELECT * FROM vehicle";
@@ -212,8 +215,8 @@ if(file_exists("upload/" .$_FILES['img']['name'] )) {
 
    
         <label  class="form-label">Vehicle Number </label>
-        <select  name="vehino" id="num" class="form-control form-control-sm">
-        <option>select vehicle Number</option>
+        <select  name="vehino" id="num" class="form-control form-control-lg">
+        <option >select vehicle Number</option>
 
         </select>
   
@@ -224,19 +227,30 @@ if(file_exists("upload/" .$_FILES['img']['name'] )) {
         <input type="file" class="form-control form-control-sm"  name="img" >
         
          
+    </div>
+
+
+
+    <div class="button-section">
+     
+     <input type="submit" name="save" id="save" class="btn btn-primary" value="save">
+     
+      <input type="button" class="btn btn-primary" onclick="myFunction()" value="Reset">
+    </div>
+     
+     
+       
   
 
-      <br><br><br>
       
 
 
-      <button type="submit" name="save" id="save" class="btn btn-primary">Save</button>
-      <input type="button" class="btn btn-primary" onclick="myFunction()" value="Reset">
+      
     </form>
 
         </div>
 
-        </div>
+      
 
   <script>
     function myFunction() {
@@ -268,7 +282,7 @@ if(file_exists("upload/" .$_FILES['img']['name'] )) {
 
   <script>
 
-  $(document).ready(function(){
+  /*$(document).ready(function(){
   $("#save").click(function(){
    var nic = $("#nic").val();
    var fname = $("#fname").val();
@@ -290,12 +304,11 @@ if(file_exists("upload/" .$_FILES['img']['name'] )) {
    if (mno == "" || mno.length() < 10) {
       $("#errormno").html("Mobile Number Name is required");
     }
-    else if (address == "") {
+    if (address == "") {
       $("#erroradd").html("Address is required");
     }
-    
   });
-});
+});*/
   </script>
 
 </body>

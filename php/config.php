@@ -2,7 +2,7 @@
 $host = "localhost";
 $user="root";
 $password="";
-$db="sampleproject";
+$db="car-rental";
 
 
 $data = mysqli_connect($host,$user,$password,$db);

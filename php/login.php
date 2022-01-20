@@ -1,15 +1,8 @@
 <?php
-$host = "localhost";
-$user="root";
-$password="";
-$db="sampleproject";
+include 'config.php';
 
 session_start();
-$data = mysqli_connect($host,$user,$password,$db);
-if($data===false)
-{
-	die("connection error");
-}
+
 
 if(isset($_POST['log']))
 {
@@ -26,7 +19,7 @@ if(isset($_POST['log']))
 	{ 
 
    $_SESSION["username"]=$username;
-   header("location:userhome.php");
+   header("location:index.php");
  }
  elseif($row["usertype"]=="admin")
  {   
@@ -74,193 +67,145 @@ if(isset($_POST['regi']))
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body {font-family: Arial, Helvetica, sans-serif;}
+   * {
+	box-sizing: border-box;
+}
+body {
+	font-family: poppins;
+	font-size: 16px;
+	color: #fff;
+}
+.form-box {
+	background-color: rgba(0, 0, 0, 0.7);
+	margin: auto auto;
+	padding: 40px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px #000;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 500px;
+	height: 430px;
+}
+.form-box:before {
+	background-image: url("../image/car1.png");
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	content: "";
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: -1;
+	display: block;
+	filter: blur(2px);
+}
+.form-box .header-text {
+	font-size: 32px;
+	font-weight: 600;
+	padding-bottom: 30px;
+	text-align: center;
+}
+.form-box input {
+	margin: 10px 0px;
+	border: none;
+	padding: 10px;
+	border-radius: 5px;
+	width: 100%;
+	font-size: 18px;
+	font-family: poppins;
+}
+.form-box input[type=checkbox] {
+	display: none;
+}
+.form-box label {
+	position: relative;
+	margin-left: 5px;
+	margin-right: 10px;
+	top: 5px;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+}
+.form-box label:before {
+	content: "";
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border-radius: 5px;
+	position: absolute;
+	left: 0;
+	bottom: 1px;
+	background-color: #ddd;
+}
+.form-box input[type=checkbox]:checked+label:before {
+	content: "\2713";
+	font-size: 20px;
+	color: #000;
+	text-align: center;
+	line-height: 20px;
+}
+.form-box span {
+	font-size: 14px;
+}
+.regi {
+	background-color: deepskyblue;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	width: 100%;
+	font-size: 18px;
+	padding: 10px;
+	margin: 20px 0px;
+}
+span a {
+	color: #BBB;
+}
 
-    /* Full-width input fields */
-    input[type=text], input[type=password] {
-      width: 100%;
-      padding: 12px 20px;
-      margin: 8px 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-
-    /* Set a style for all buttons */
-    button {
-      background-color: #04AA6D;
-      color: white;
-      padding: 14px 20px;
-      margin: 8px 0;
-      border: none;
-      cursor: pointer;
-      width: 100%;
-    }
-    select{
-      width: 100%;
-      padding: 12px 20px;
-      margin: 8px 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-
-    }
-
-    button:hover {
-      opacity: 0.8;
-    }
-
-    /* Extra styles for the cancel button */
-    .cancelbtn {
-      width: auto;
-      padding: 10px 18px;
-      background-color: #f44336;
-    }
-
-    /* Center the image and position the close button */
-    .imgcontainer {
-      text-align: center;
-      margin: 24px 0 12px 0;
-      position: relative;
-    }
-
-    img.avatar {
-      width: 40%;
-      border-radius: 50%;
-    }
-    h1{
-       color: #4CAF50;
-    }
-
-    .container {
-      padding: 16px;
-    }
-
-    span.psw {
-      float: right;
-      padding-top: 16px;
-    }
-
-    /* The Modal (background) */
-    .modal {
-      display: none; /* Hidden by default */
-      position: fixed; /* Stay in place */
-      z-index: 1; /* Sit on top */
-      left: 0;
-      top: 0;
-      width: 100%; /* Full width */
-      height: 100%; /* Full height */
-      overflow: auto; /* Enable scroll if needed */
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-      padding-top: 60px;
-    }
-
-    /* Modal Content/Box */
-    .modal-content {
-      background-color: #fefefe;
-      margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-      border: 1px solid #888;
-      width: 80%; /* Could be more or less, depending on screen size */
-    }
-
-    /* The Close Button (x) */
-    .close {
-      position: absolute;
-      right: 25px;
-      top: 0;
-      color: #000;
-      font-size: 35px;
-      font-weight: bold;
-    }
-    .regi{
-     background-color: #04AA6D;
-     color: white;
-     padding: 14px 20px;
-     margin: 8px 0;
-     border: none;
-     cursor: pointer;
-     width: 100%;
-   }
-   .close:hover,
-   .close:focus {
-    color: red;
-    cursor: pointer;
-  }
-
-  /* Add Zoom Animation */
-  .animate {
-    -webkit-animation: animatezoom 0.6s;
-    animation: animatezoom 0.6s
-  }
-
-  @-webkit-keyframes animatezoom {
-    from {-webkit-transform: scale(0)} 
-    to {-webkit-transform: scale(1)}
-  }
-  
-  @keyframes animatezoom {
-    from {transform: scale(0)} 
-    to {transform: scale(1)}
-  }
-
-  /* Change styles for span and cancel button on extra small screens */
-  @media screen and (max-width: 300px) {
-    span.psw {
-     display: block;
-     float: none;
-   }
-   .cancelbtn {
-     width: 100%;
-   }
- }
  
 </style>
 </head>
 <body>
 
 
-  <center><h1>Welcome!Register and Login to access the system</h1>
-  <img src="../image/bgimage.jpg"  width="1600" height="400">
   
 
-  <button onclick="document.getElementById('id01').style.display='block'" style="width:500px;">Login</button>
 
-    <br><br>
-    <button onclick="document.getElementById('id02').style.display='block'" style="width:500px;">Register</button></center>
-
-    <div id="id01" class="modal">
+<div class="form-box">
       
       <form class="modal-content animate" action="#" method="post">
-        <div class="imgcontainer">
-          <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-          
-        </div>
-
-        <div class="container">
-          <label for="uname"><b>Username</b></label>
+       
+      <div class="header-text">
+			Login Form
+		</div>
+        
           <input type="text" placeholder="Enter Username" name="username" required>
 
-          <label for="psw"><b>Password</b></label>
+     
           <input type="password" placeholder="Enter Password" name="password" required>
-          
+         
+          <input id="terms" type="checkbox"> 
+          <label for="terms"></label>
+          <span>Agree with <a href="#">Terms & Conditions</a></span> 
+             
           <input type="submit" class="regi" name="log" value="Login"/>
-          <label>
-            <input type="checkbox" checked="checked" name="remember"> Remember me
-          </label>
-        </div>
-
-        <div class="container" style="background-color:#f1f1f1">
-          <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-          
-        </div>
+          <a href="#">Forget Password</a>
+      
+        
       </form>
     </div>
+    
 
 
 
 
-    <div id="id02" class="modal">
+   <!-- <div id="id02" class="modal">
       
       <form class="modal-content animate" action="#" method="post">
         <div class="imgcontainer">
@@ -296,7 +241,7 @@ if(isset($_POST['regi']))
           
         </div>
       </form>
-    </div>
+    </div>-->
 
     <script>
 // Get the modal
